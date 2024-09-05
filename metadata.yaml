@@ -2,5 +2,5 @@ homepage: "https://www.markus-baersch.de"
 documentation: "https://github.com/mbaersch/conversions-manager/#readme"
 versions:
   # Latest version
-  - sha: 
+  - sha: 4fa2e805d2aded7f029b59323524fb03a0bb5621
     changeNotes: Initial release.
