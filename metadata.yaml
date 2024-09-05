@@ -1,0 +1,13 @@
+homepage: "https://www.markus-baersch.de"
+documentation: "https://github.com/mbaersch/microsoft-consent-mode-tag/#readme"
+versions:
+  # Latest version
+  - sha: 971fd39df6c402f12f10a2018fd9ab8868791768
+    changeNotes: added Clarity cookie consent option.
+  # Older versions
+  - sha: f8b4e65077c65f613899a8f1b61aa7d9b357a4d1
+    changeNotes: added dataLayer event option.
+  - sha: 5d04b3e3908448940a5a92cee2c6657607f4e4ae
+    changeNotes: added wait_for_update setting and TCF option.
+  - sha: 1fd2a22adb7b5811e17e1df6d1da5ed8e60ee9c7
+    changeNotes: Initial release.
