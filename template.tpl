@@ -36,7 +36,7 @@ ___TEMPLATE_PARAMETERS___
     "simpleValueType": true,
     "help": "Enter a name for the dataLayer event that will be pushed along with all conversion data",
     "alwaysInSummary": true,
-    "defaultValue": "pageConversionEvent",
+    "defaultValue": "managedConversionEvent",
     "valueValidators": [
       {
         "type": "NON_EMPTY"
@@ -74,7 +74,7 @@ ___TEMPLATE_PARAMETERS___
               "name": "pattern",
               "displayName": "Conversion rule",
               "simpleValueType": true,
-              "help": "Use partial match (default): Enter a string that has to be contained in the URL (including for creating a dataLayer event. Split multiple patterns with a \"|\". \n\nRegEx: To use regular expressions, use \"re:\" as prefix (example: \"re:something_.*\\.html$\")\n\nTo compare with events name instead of URL: Use prefix \"ec:\" to compare with the current event name (\"event contains\"), \"ee:\" for \"event equals\" or \"er:\" for \"event matches regex\"."
+              "help": "Use partial match (default): Enter a string that has to be contained in the URL (including parameters) for creating a dataLayer event. Split multiple patterns with a \"|\". \n\nRegEx: To use regular expressions, use \"re:\" as prefix (example: \"re:something_.*\\.html$\")\n\nTo compare with events name instead of URL: Use prefix \"ec:\" to compare with the current event name (\"event contains\"), \"ee:\" for \"event equals\" or \"er:\" for \"event matches regex\"."
             },
             "isUnique": false
           },
@@ -145,7 +145,7 @@ ___TEMPLATE_PARAMETERS___
         "name": "customInput",
         "displayName": "Custom value",
         "simpleValueType": true,
-        "help": "Enter a variable or multiple variables as a value to compare to (instead of URL or event name) in rules with \"ce:\", \"cm.\", or \"cr:\" prefix.",
+        "help": "Enter a variable or multiple variables as a value to compare to (instead of URL or event name) in rules with \"ce:\", \"cm:\", or \"cr:\" prefix.",
         "enablingConditions": [
           {
             "paramName": "enableCustomInput",
