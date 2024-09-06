@@ -7,6 +7,8 @@ If you only track a single type of conversion like a purchase for a few services
 
 The idea behind this tag is to reduce the amount of assets like tags and triggers as well as the risk ofinconsistent tagging by leaving out vendors when implementing new conversions - or change / update existing ones. 
 
+![image](https://github.com/user-attachments/assets/d5a43c5d-52d2-4cef-b318-f34497bc6be1)
+
 In order to create a **centralized management for every conversion** that depends on a URL or event, you can use this tag template. 
 
 **Note:** This might not cover 100% of all conversion events and it can be necessary to keep some conversions and triggers seperate, but the tag should already cover a lot of cases. It is still work in progress and there might be an update that will add click events, too.     
