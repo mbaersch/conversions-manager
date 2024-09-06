@@ -16,7 +16,7 @@ In order to create a **centralized management for every conversion** that depend
 **Note:** This might not cover 100% of all conversion events and it can be necessary to keep some conversions and triggers seperate, but the tag should already cover a lot of cases.      
 
 ## Usage
-After installing the template, create a new tag and trigger it with every page view (or the according event from your CMP) and / or for specific dataLayer events; depending on your conversion set-up. Wnenever the tag gets fired, it will compare the current **URL, event name or custom input value** with a pattern, either using "contains" (default) "equals" to find **matches** or a **regular expression** as operator.
+After installing the template, create a new tag and trigger it with every page view (or the according event from your CMP) and / or for specific dataLayer events; depending on your conversion set-up. Whenever the tag gets fired, it will compare the current **URL, event name or custom input value** with a pattern, either using "contains" (default) "equals" to find **matches** or a **regular expression** as operator.
 
 You can define several rules and add properties like a conversion name, value, Google Ads conversion label and any other information that you need to feed yor conversion tags. 
 
