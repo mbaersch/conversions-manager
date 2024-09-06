@@ -66,15 +66,15 @@ ___TEMPLATE_PARAMETERS___
       {
         "type": "PARAM_TABLE",
         "name": "conversionData",
-        "displayName": "Add at least one conversion pattern and add conversion data to be pushed to the dataLayer along with the defined conversion event name.",
+        "displayName": "Add at least one conversion rule and add conversion data to be pushed to the dataLayer along with the defined conversion event name.",
         "paramTableColumns": [
           {
             "param": {
               "type": "TEXT",
               "name": "pattern",
-              "displayName": "Trigger pattern",
+              "displayName": "Conversion rule",
               "simpleValueType": true,
-              "help": "Use partial match (default): Enter a string that has to be contained in the URL (including for creating a dataLayer event. Split multiple patterns with a \"|\". \n\nRegEx: To use regular expressions, use \"re:\" as prefix (example: \"re:something_.*\\.html$\")\n\nEvents: Use prefix \"ev:\" to compare with the current event name (case sensitive, partial match)"
+              "help": "Use partial match (default): Enter a string that has to be contained in the URL (including for creating a dataLayer event. Split multiple patterns with a \"|\". \n\nRegEx: To use regular expressions, use \"re:\" as prefix (example: \"re:something_.*\\.html$\")\n\nTo compare with events name instead of URL: Use prefix \"ec:\" to compare with the current event name (\"event contains\"), \"ee:\" for \"event equals\" or \"er:\" for \"event matches regex\"."
             },
             "isUnique": false
           },
@@ -91,7 +91,7 @@ ___TEMPLATE_PARAMETERS___
             "param": {
               "type": "TEXT",
               "name": "value",
-              "displayName": "Conversion value",
+              "displayName": "Value",
               "simpleValueType": true,
               "defaultValue": 0,
               "valueValidators": [
@@ -118,9 +118,44 @@ ___TEMPLATE_PARAMETERS___
               "displayName": "Custom data",
               "simpleValueType": true,
               "lineCount": 10,
-              "help": "add optional parameters as string or valid JSON here. The tag will try parse data and add it as an array / object to the dataLayer event if a value is present. If it cannot be parsed as JSON, it will remain a string value."
+              "help": "add optional parameters as string or valid JSON here. The tag will try to parse and add data as an array / object to the dataLayer event if a value is present. If it cannot be parsed as JSON, it will remain a string value."
             },
             "isUnique": false
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "GROUP",
+    "name": "grpAdvanced",
+    "displayName": "Advanced Options",
+    "groupStyle": "ZIPPY_OPEN_ON_PARAM",
+    "subParams": [
+      {
+        "type": "CHECKBOX",
+        "name": "enableCustomInput",
+        "checkboxText": "Enable custom rule input",
+        "simpleValueType": true,
+        "defaultValue": false,
+        "help": "Optionally define a custom value to use in a rule. If active and a \"Custom value\" is set, you can use the prefix \"ce:\" in a rule to look for a custom value that is identical with the rule pattern (\"equals\"). \"cc:\" finds a partial match (\"contains\") and \"cr:\" allows you to use a regex for the custom value."
+      },
+      {
+        "type": "TEXT",
+        "name": "customInput",
+        "displayName": "Custom value",
+        "simpleValueType": true,
+        "help": "Enter a variable or multiple variables as a value to compare to (instead of URL or event name) in rules with \"ce:\", \"cm.\", or \"cr:\" prefix.",
+        "enablingConditions": [
+          {
+            "paramName": "enableCustomInput",
+            "paramValue": true,
+            "type": "EQUALS"
+          }
+        ],
+        "valueValidators": [
+          {
+            "type": "NON_EMPTY"
           }
         ]
       }
@@ -138,20 +173,37 @@ const JSON = require('JSON');
 const url = require("getUrl")();
 
 if (data.conversionData) {
-  var currentConversions = data.conversionData.filter(function(x) {
+  let currentConversions = data.conversionData.filter(function(x) {
     if (!x.pattern) return false;
-    var match = false;
-    if (x.pattern.slice(0,3) === "re:") {
-      //use regex
-      match = url.match(x.pattern.slice(3));
-    } else if (x.pattern.slice(0,3) === "ev:") {
-      //use event name
-      match = event_name.indexOf(x.pattern.slice(3)) >= 0;
+    let cinput = data.enableCustomInput === true && data.customInput ? data.customInput : "";
+    let haystack =  url;
+    let needle = x.pattern;
+    let method = "contains";
+    
+    if (needle.slice(2,3) == ":") {
+      let type = needle.slice(0,2);
+      if (type === "re") method = "regex"; else
+      if (type === "ee") { haystack = event_name; method = "equals"; } else 
+      if (type === "er") { haystack = event_name; method = "regex"; } else 
+      if (type === "ec") haystack = event_name; else 
+      if (type === "ce")  { haystack = cinput; method = "equals"; } else
+      if (type === "cr")  { haystack = cinput; method = "regex"; } else
+      if (type === "cc")  haystack = cinput;
+      
+      needle = needle.slice(3);
+      
+    }
+    
+    let match = false;
+    if (method === "regex") {
+      match = haystack.match(needle);
+    } else if (method === "equals") {
+      match = haystack === needle;
     } else {
       //find matching strings 
-      var pt = x.pattern.split("|");
+      let pt = needle.split("|");
       pt.forEach(function(y){
-        if (y && y != "") match = match || url.indexOf(y) >= 0;
+        if (y && y != "") match = match || haystack.indexOf(y) >= 0;
       });
     }  
     return match;
@@ -169,7 +221,7 @@ if (data.conversionData) {
             custom: customData||data.placeholder
           }
         };
-      //require("logToConsole")(dlEvent);
+      require("logToConsole")(dlEvent);
       dataLayerPush(dlEvent);
     });
   }  
@@ -300,6 +352,24 @@ ___WEB_PERMISSIONS___
     },
     "clientAnnotations": {
       "isEditedByUser": true
+    },
+    "isRequired": true
+  },
+  {
+    "instance": {
+      "key": {
+        "publicId": "logging",
+        "versionId": "1"
+      },
+      "param": [
+        {
+          "key": "environments",
+          "value": {
+            "type": 1,
+            "string": "debug"
+          }
+        }
+      ]
     },
     "isRequired": true
   }
