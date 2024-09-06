@@ -37,6 +37,7 @@ There are several options for defining a "rule" that will trigger a dataLayer pu
 
 - **Compare to custom input value**: When you check the advanced option *Enable custom rule input*, one or multiple variables can be used to access data like `{{Click Classes}}` or others. If a value is present and the option is active, you can use the prefix `cc:` to *compare* with the custom value (partial match), `ce:` for *equals* or `cr:` for regex use. Example: `cc:btn-finish|btn-send`.
 
+**Note**: If you mix rules for events, URLs, and custom values that compare with click classes, click IDs or similar data in the same *Conversions Manager* tag and fire it with every page view *and* specific events or clicks (or even all events), be aware that every matching rule will lead to a dataLayer push - everytime. If a click trigger fires the tag again on a page where the URL already led to a conversion, the second run will eventually trigger click conversions *and* additionally the already tracked conversion from the matching URL rule (again). It might be neccessary to create different *Conversions Manager* tags for different rule types to avoid that problem.
 
 #### Adding conversion data
 You can define a name, value, label and any other attribute of the current conversion using the table fields. Either enter constant values or use variables to calculate dynamic values or get them from the dataLayer. 
