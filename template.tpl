@@ -14,9 +14,10 @@ ___INFO___
   "version": 1,
   "securityGroups": [],
   "displayName": "Conversions Manager",
+  "categories": ["CONVERSIONS", "UTILITY"],
   "brand": {
-    "id": "brand_dummy",
-    "displayName": "",
+    "id": "mbaersch",
+    "displayName": "mbaersch",
     "thumbnail": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAMAAADXqc3KAAAAb1BMVEUAAADT09PKysrX19fZ2dliYmLy8vKPj4+ysrKBgYHv7+9lZWV0dHSEhIRoaGiKiorn5+dra2vt7e2kpKTa2tq7u7u3t7ebm5uYmJiVlZV+fn54eHhubm7h4eHb29vT09PNzc3Hx8fBwcGpqalzc3PgukEeAAAABXRSTlMAjspxYsZNnOwAAAClSURBVCjPrZBZEoIwEEQj2iYQsgGyu3v/M0qiGVS+rOL9zbyp6q5h61NyYvslUhCClpvXvPdk4SKPQo5yFtrNIrfpJLKj9UJco2BOXqa5UJDCiwbmLQxUD1FpQE2i1TjEeO3DiwEoQ7iiXon0rYrbObQa2AcP8NDKuhAws5O68qKMjQgDV9tTBwomFDzyzhYkPWT3s6MPsH9EyxW04fVCjAg0bHWeA7MIlinpEToAAAAASUVORK5CYII\u003d"
   },
   "description": "Push conversion data to dataLayer for triggering different tags with centralized conversion rule set. Enables using one conversion tag per service for multiple conversions.",
