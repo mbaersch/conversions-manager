@@ -7,7 +7,7 @@
 ## Why this template? 
 If you only track a single type of conversion like a purchase for a few services, this tag might not be for you. But when there are multiple conversions, depending on different events and / or URLs, and several services like Google Ads, Google Analytics, Meta, Pinterest, Awin and others, you will end up with a lot of different triggers and tags. Additionally, with every change the chance of missing a tag or service rises. Over the years, such a container can easily contain 100+ assets just to inform every service about different conversions. 
 
-The idea behind this tag is to reduce the amount of assets like tags and triggers as well as the risk ofinconsistent tagging by leaving out vendors when implementing new conversions - or change / update existing ones. 
+The idea behind this tag is to reduce the amount of assets like tags and triggers as well as the risk of inconsistent tagging by leaving out vendors when implementing new conversions - or change / update existing ones. 
 
 ![image](https://github.com/user-attachments/assets/d5a43c5d-52d2-4cef-b318-f34497bc6be1)
 
