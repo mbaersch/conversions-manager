@@ -2,7 +2,8 @@
 
 **Create conversion event pushes to dataLayer depending on URLs (Custom Tag Template for Google Tag Manager)**
 
-![Template Status](https://img.shields.io/badge/Community%20Template%20Gallery%20Status-submitted-orange) ![Repo Size](https://img.shields.io/github/repo-size/mbaersch/conversions-manager) ![License](https://img.shields.io/github/license/mbaersch/conversions-manager)
+[![Template Status](https://img.shields.io/badge/Community%20Template%20Gallery%20Status-published-green)](https://tagmanager.google.com/gallery/#/owners/mbaersch/templates/conversions-manager) ![Repo Size](https://img.shields.io/github/repo-size/mbaersch/conversions-manager) ![License](https://img.shelds.io/github/license/mbaersch/conversions-manager)
+
 
 ## Why this template? 
 If you only track a single type of conversion like a purchase for a few services, this tag might not be for you. But when there are multiple conversions, depending on different events and / or URLs, and several services like Google Ads, Google Analytics, Meta, Pinterest, Awin and others, you will end up with a lot of different triggers and tags. Additionally, with every change the chance of missing a tag or service rises. Over the years, such a container can easily contain 100+ assets just to inform every service about different conversions. 
