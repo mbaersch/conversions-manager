@@ -30,7 +30,11 @@ Enter a **name for the dataLayer event** that will be pushed along with all conv
 The main configuration work will be done in this section. Add a new entry to the table for every conversion that you want to track by a common dataLayer event created by this tag.
 
 #### Conversion rules
-There are several options for defining a "rule" that will trigger a dataLayer push. If you do not want to remember the syntax but still use more than the default option described below and / or create and maintain a lot of rules, you can use the "Conversions Manager Toolbox" Google Sheet template (Link in separate section below): 
+There are several options for defining a "rule" that will trigger a dataLayer push. If you do not want to remember the syntax but still use more than the default option described below and / or create and maintain a lot of rules, you can use the ["Conversions Manager Toolbox"](https://github.com/mbaersch/conversions-manager?tab=readme-ov-file#conversions-manager-toolbox) Google Sheet template:
+
+![image](https://github.com/mbaersch/conversions-manager/blob/main/_res/pattern-helper.png)
+
+#### Conversion rule syntax
 
 - **Partial URL match, simple input version (default)**: If you want to track a specific page, you can enter a full URL including *https://* and the domain or just a part of the path that the current page URL has to **contain**. Example: `/some/path?success=true` will match any URL that contains this path, regardless of domain, earlier parts of the path, or other paramaters that might follow.   
 
@@ -146,6 +150,8 @@ For quicker (and more reliable) results, you can use a Google Spreadsheet that c
 - add new fields to your "Custom" structure or edit / delete existing data
 - create variables to access all parameters (standard and custom) with a click
 - add triggers to the container to fire tags depending on variable values    
+
+![image](https://github.com/mbaersch/conversions-manager/blob/main/_res/toolbox-rules.png)
 
 ### Use the template
 You can [access the template here](https://docs.google.com/spreadsheets/d/1k1L3CIudh2c8fyX3jnYrGqCrCqCvFmrx7E_bGzPBtts), make a copy in your own drive and use the "Conversions Manager Toolbox" menu in the spreadsheet to read and write rules and add variables and triggers.
