@@ -14,13 +14,16 @@ ___INFO___
   "version": 1,
   "securityGroups": [],
   "displayName": "Conversions Manager",
-  "categories": ["CONVERSIONS", "UTILITY"],
+  "categories": [
+    "CONVERSIONS",
+    "UTILITY"
+  ],
   "brand": {
-    "id": "mbaersch",
+    "id": "github.com_mbaersch",
     "displayName": "mbaersch",
     "thumbnail": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAMAAADXqc3KAAAAb1BMVEUAAADT09PKysrX19fZ2dliYmLy8vKPj4+ysrKBgYHv7+9lZWV0dHSEhIRoaGiKiorn5+dra2vt7e2kpKTa2tq7u7u3t7ebm5uYmJiVlZV+fn54eHhubm7h4eHb29vT09PNzc3Hx8fBwcGpqalzc3PgukEeAAAABXRSTlMAjspxYsZNnOwAAAClSURBVCjPrZBZEoIwEEQj2iYQsgGyu3v/M0qiGVS+rOL9zbyp6q5h61NyYvslUhCClpvXvPdk4SKPQo5yFtrNIrfpJLKj9UJco2BOXqa5UJDCiwbmLQxUD1FpQE2i1TjEeO3DiwEoQ7iiXon0rYrbObQa2AcP8NDKuhAws5O68qKMjQgDV9tTBwomFDzyzhYkPWT3s6MPsH9EyxW04fVCjAg0bHWeA7MIlinpEToAAAAASUVORK5CYII\u003d"
   },
-  "description": "Push conversion data to dataLayer for triggering different tags with centralized conversion rule set. Enables using one conversion tag per service for multiple conversions.",
+  "description": "Push conversion / event data to dataLayer for triggering different tags with centralized conversion rule set. Enables using one tag per service for multiple conversions or events.",
   "containerContexts": [
     "WEB"
   ]
@@ -67,7 +70,7 @@ ___TEMPLATE_PARAMETERS___
       {
         "type": "PARAM_TABLE",
         "name": "conversionData",
-        "displayName": "Add at least one conversion rule and add conversion data to be pushed to the dataLayer along with the defined conversion event name.",
+        "displayName": "Add at least one conversion rule and add conversion data to be pushed to the dataLayer along with the defined conversion event name. NOTE: you can use a Google Spreadsheet to edit this table. Find a link at https://github.com/mbaersch/conversions-manager/#readme.",
         "paramTableColumns": [
           {
             "param": {
@@ -75,7 +78,7 @@ ___TEMPLATE_PARAMETERS___
               "name": "pattern",
               "displayName": "Conversion rule",
               "simpleValueType": true,
-              "help": "Use partial match (default): Enter a string that has to be contained in the URL (including parameters) for creating a dataLayer event. Split multiple patterns with a \"|\". \n\nRegEx: To use regular expressions, use \"re:\" as prefix (example: \"re:something_.*\\.html$\")\n\nTo compare with events name instead of URL: Use prefix \"ec:\" to compare with the current event name (\"event contains\"), \"ee:\" for \"event equals\" or \"er:\" for \"event matches regex\"."
+              "help": "Use partial match (default): Enter a string that has to be contained in the URL (including parameters) for creating a dataLayer event. You can split multiple patterns with a \"|\" when using this default mode without any prefix. \n\nNote: You can use the prefix \"uc:\" for \"URL contains\" if you want all rules  to use the same structure. \n\nRegEx: To use regular expressions with URL, use \"re:\" or \"ur:\" as prefix (example: \"re:something_.*\\.html$\")\n\nEquals: Use \"ue:\" to define a pattern that has to completely match the current URL. \n\nTo compare with events name instead of URL: Use prefix \"ec:\" to compare with the current event name (\"event contains\"), \"ee:\" for \"event equals\" or \"er:\" for \"event matches regex\"."
             },
             "isUnique": false
           },
@@ -146,7 +149,7 @@ ___TEMPLATE_PARAMETERS___
         "name": "customInput",
         "displayName": "Custom value",
         "simpleValueType": true,
-        "help": "Enter a variable or multiple variables as a value to compare to (instead of URL or event name) in rules with \"ce:\", \"cm:\", or \"cr:\" prefix.",
+        "help": "Enter a variable or multiple variables as a value to compare to (instead of URL or event name) in rules with \"ce:\", \"cc:\", or \"cr:\" prefix. You can access single keys from an object, with \"pe:\", \"pc:\", or \"pr:\", too. See documentation at https://github.com/mbaersch/conversions-manager/#readme for more details and examples.",
         "enablingConditions": [
           {
             "paramName": "enableCustomInput",
@@ -176,23 +179,40 @@ const url = require("getUrl")();
 if (data.conversionData) {
   let currentConversions = data.conversionData.filter(function(x) {
     if (!x.pattern) return false;
-    let cinput = data.enableCustomInput === true && data.customInput ? data.customInput : "";
+    let cinput = "", ckeyval;
     let haystack =  url;
     let needle = x.pattern;
     let method = "contains";
+    if (data.enableCustomInput === true && data.customInput) {
+      cinput =  data.customInput;
+      if ((needle.slice(0,1) == "p") && (needle.slice(2,3) == ":")) {
+        //format for path search, example pageTitle (from custom) contains "404": pc:pageTitle:404
+        var needleParts = needle.split(":");
+        var ckey = needleParts[1];
+        if (ckey != undefined) {
+          if (typeof(cinput) === "string") cinput = JSON.parse(cinput); 
+          ckeyval = (cinput||{})[ckey];
+          needle = needleParts[0] + ":" + needleParts[2];
+        }
+      }
+    }
     
     if (needle.slice(2,3) == ":") {
       let type = needle.slice(0,2);
-      if (type === "re") method = "regex"; else
+      if (type === "ue") method = "equals"; else
+      if ((type === "re") || (type === "ur")) method = "regex"; else
       if (type === "ee") { haystack = event_name; method = "equals"; } else 
       if (type === "er") { haystack = event_name; method = "regex"; } else 
       if (type === "ec") haystack = event_name; else 
       if (type === "ce")  { haystack = cinput; method = "equals"; } else
       if (type === "cr")  { haystack = cinput; method = "regex"; } else
-      if (type === "cc")  haystack = cinput;
-      
+      if (type === "cc")  haystack = cinput; else
+      if (ckeyval) {  
+        if (type === "pe") { haystack = ckeyval; method = "equals"; } else 
+        if (type === "pr") { haystack = ckeyval; method = "regex"; } else 
+        if (type === "pc") haystack = ckeyval;
+      }
       needle = needle.slice(3);
-      
     }
     
     let match = false;
@@ -222,7 +242,6 @@ if (data.conversionData) {
             custom: customData||data.placeholder
           }
         };
-      require("logToConsole")(dlEvent);
       dataLayerPush(dlEvent);
     });
   }  
@@ -353,24 +372,6 @@ ___WEB_PERMISSIONS___
     },
     "clientAnnotations": {
       "isEditedByUser": true
-    },
-    "isRequired": true
-  },
-  {
-    "instance": {
-      "key": {
-        "publicId": "logging",
-        "versionId": "1"
-      },
-      "param": [
-        {
-          "key": "environments",
-          "value": {
-            "type": 1,
-            "string": "debug"
-          }
-        }
-      ]
     },
     "isRequired": true
   }

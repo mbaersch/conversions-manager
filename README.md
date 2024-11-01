@@ -1,23 +1,23 @@
 # Conversions Manager
 
-**Create conversion event pushes to dataLayer depending on URLs (Custom Tag Template for Google Tag Manager)**
+**Create (conversion) event pushes to dataLayer depending on URLs (Custom Tag Template for Google Tag Manager)**
 
 [![Template Status](https://img.shields.io/badge/Community%20Template%20Gallery%20Status-published-green)](https://tagmanager.google.com/gallery/#/owners/mbaersch/templates/conversions-manager) ![Repo Size](https://img.shields.io/github/repo-size/mbaersch/conversions-manager) ![License](https://img.shelds.io/github/license/mbaersch/conversions-manager)
 
 
 ## Why this template? 
-If you only track a single type of conversion like a purchase for a few services, this tag might not be for you. But when there are multiple conversions, depending on different events and / or URLs, and several services like Google Ads, Google Analytics, Meta, Pinterest, Awin and others, you will end up with a lot of different triggers and tags. Additionally, with every change the chance of missing a tag or service rises. Over the years, such a container can easily contain 100+ assets just to inform every service about different conversions. 
+If you only track a single type of conversion like a purchase for a few services, this tag might not be for you. But when there are multiple conversions or other events, depending on different dataLayer events and / or URLs, and several services like Google Ads, Google Analytics, Meta, Pinterest, Awin and others, you will end up with a lot of different triggers and tags. Additionally, with every change the chance of missing a tag or service rises. Over the years, such a container can easily contain 100+ assets just to inform every service about different conversions or important events. 
 
-The idea behind this tag is to reduce the amount of assets like tags and triggers as well as the risk of inconsistent tagging by leaving out vendors when implementing new conversions - or change / update existing ones. 
+The idea behind this tag is to reduce the amount of assets like tags and triggers as well as the risk of inconsistent tagging by leaving out vendors when implementing new conversions and events - or change / update existing ones. 
 
 ![image](https://github.com/user-attachments/assets/d5a43c5d-52d2-4cef-b318-f34497bc6be1)
 
-In order to create a **centralized management for every conversion** that depends on a URL or event, you can use this tag template. 
+In order to create a **centralized management for every conversion or important event**, you can use this tag template. 
 
 **Note:** This might not cover 100% of all conversion events and it can be necessary to keep some conversions and triggers seperate, but the tag should already cover a lot of cases.      
 
 ## Usage
-After installing the template, create a new tag and trigger it with every page view (or the according event from your CMP) and / or for specific dataLayer events; depending on your conversion set-up. Whenever the tag gets fired, it will compare the current **URL, event name or custom input value** with a pattern, either using "contains" (default) "equals" to find **matches** or a **regular expression** as operator.
+After installing the template, create a new tag and trigger it with every page view (or the according event from your CMP) and / or for specific dataLayer events; depending on your conversion set-up. Whenever the tag gets fired, it will compare the current **URL, event name or any custom input value** with a pattern, either using "contains" (default) "equals" to find **matches** or a **regular expression** as operator.
 
 You can define several rules and add properties like a conversion name, value, Google Ads conversion label and any other information that you need to feed yor conversion tags. 
 
@@ -30,15 +30,21 @@ Enter a **name for the dataLayer event** that will be pushed along with all conv
 The main configuration work will be done in this section. Add a new entry to the table for every conversion that you want to track by a common dataLayer event created by this tag.
 
 #### Conversion rules
-There are several options for defining a "rule" that will trigger a dataLayer push: 
+There are several options for defining a "rule" that will trigger a dataLayer push. If you do not want to remember the syntax but still use more than the default option described below and / or create and maintain a lot of rules, you can use the "Conversions Manager Toolbox" Google Sheet template (Link in separate section below): 
 
-- **Partial match (default)**: If you want to track a specific page, you can enter a full URL including *https://* and the domain or just a part of the path that the current page URL has to **contain**. If there are several versions for a path that should fire the same conversion, add multiple entries and split them with a "|". Example: `/page1/confirm|page2/confirm`. As the full URL is used, you can react to parameters as well. 
+- **Partial URL match, simple input version (default)**: If you want to track a specific page, you can enter a full URL including *https://* and the domain or just a part of the path that the current page URL has to **contain**. Example: `/some/path?success=true` will match any URL that contains this path, regardless of domain, earlier parts of the path, or other paramaters that might follow.   
 
-- **RegEx**: To use regular expressions, use `re:` as prefix. Example: `re:something_.*\.html$`.
+- **Simple URL lists**: If there are several versions for a path that should fire the same conversion, add multiple entries and split them with a "|". Example: `/page1/confirm|page2/confirm|some/other/path`. As the full URL is used, you can react to parameters as well. 
 
-- **Compare event name instead of URL**: Use prefix `ec:` to compare with the current event name ("event contains"), `ee:` for "event equals" or `er:` for "event matches regex". Example: `ee:purchase`.
+- **Partial URL match, prefix version**: As other input values than the current URL require a specific syntax, you can use optional the prefix `uc:` (for "*URL contains*"). A pattern like `uc:/some/path?success=true` would lead to the same result as the simple version `/some/path?success=true`. 
 
-- **Compare to custom input value**: When you check the advanced option *Enable custom rule input*, one or multiple variables can be used to access data like `{{Click Classes}}` or others. If a value is present and the option is active, you can use the prefix `cc:` to *compare* with the custom value (partial match), `ce:` for *equals* or `cr:` for regex use. Example: `cc:btn-finish|btn-send`.
+- **URL Matches**: The prefix `um:` (for "*URL matches*") compares a full URL (including protocol!) with the value after the colon. Example: `um:https://www.mydomain.com/some/path?success=true` will only fire when the URL completely matches. Other hosts or additional parameters would not trigger this rule. 
+
+- **URL RegEx**: To use regular expressions, use `ur:` (for "*URL matches RegEx*") or simply `re:` ("*RegEx*", as the URL is the default value to compare to) as prefix. Example: `re:something_.*\.html$`.
+
+- **Compare event name instead of URL**: Use prefix `ec:` to compare with the current event name ("*event contains*"), `ee:` for "*event equals*" or `er:` for "*event matches regex*". Example: `ee:purchase`.
+
+- **Compare to custom input value**: When you check the advanced option *Enable custom rule input*, one or multiple variables can be used to access data like `{{Click Classes}}` or others. If a value is present and the option is active, you can use the prefix `cc:` to *compare* with the custom value (partial match), `ce:` for *equals* or `cr:` for RegEx use. Example: `cc:btn-finish|btn-send`. Note: As all "*contains*" options will always split a value that contains a pipe ("|") in multiple values, make sure to only compare to a value without a pipe or use RegEx options instead.  
 
 ### Custom input
 Check the box to activate the input field for your custom input value. You can combine several variables with a specific separator or a fixed pattern.
@@ -46,6 +52,58 @@ Check the box to activate the input field for your custom input value. You can c
 ![image](https://github.com/user-attachments/assets/e8f1b140-8f45-45ab-9ff1-741b36af9a2e)
 
 **Note**: If you mix rules for events, URLs, and custom values that compare with click classes, click IDs or similar data in the same *Conversions Manager* tag and fire it with every page view *and* specific events or clicks (or even all events), be aware that every matching rule will lead to a dataLayer push - everytime. If a click trigger fires the tag again on a page where the URL already led to a conversion, the second run will eventually trigger click conversions *and* additionally the already tracked conversion from the matching URL rule (again). It might be neccessary to create different *Conversions Manager* tags for different rule types to avoid that problem.
+
+#### Using multiple values as custom input
+When needing several variables like the referrer, page path, click- and form attributes, e-commerce data from the dataLayer or other more complex combinations in order to build all the rules you need, you can use several options for adding multiple GTM variables to your "Custom input". 
+
+One option is to use some kind of list where values can be referenced and used to look for a match. 
+
+```
+{{Click ID}}|{{Click Classes}}|{{Click URL}}|{{Click Text}}|{{Referrer}}
+```
+
+You can also use either a string with a valid JSON object representation...
+
+```
+{"i":"{{Click ID}}","c":"{{Click Classes}}","u":"{{Click URL}}", "t":”{{Click Text}}","r":"{{Referrer}}"}
+```
+
+... or a single JavaScript variable that returns a real object with all the keys you want to compare to in your rules. Example code for a JS Variable:
+
+```
+function(){
+  return {
+    pageHostname: "{{Page Hostname}}",
+    pageReferrer: "{{Referrer}}",
+    
+    clickElement: "{{Click Element}}",
+    clickId: "{{Click ID}}",
+    clickClasses: "{{Click Classes}}",
+    clickUrl: "{{Click URL}}",
+    clickText: "{{Click Text}}",
+    clickTarget: "{{Click Target}}",
+
+    formElement: "{{Form Element}}",
+    formId: "{{Form ID}}",
+    formClasses: "{{Form Classes}}",
+    formUrl: "{{Form URL}}",
+    formTarget: "{{Form Text}}",
+    
+    ecItemString: "{{ecommerce.items}}",
+    ecValue: "{{ecommerce.value}}",
+    ecTransactionId: "{{ecommerce.transaction_id}}",
+
+    //add whatever variables might be relevant for your trigger rules
+   
+  }
+}
+```
+#### Building rules for JS objects as custom values
+When working with an object like this, using the standard prefixes `cc:`, `ce:`, and `cr:` can lead to false positives easily, because only the complete custom *string* can be used for comparison. 
+
+If you want to access a *single value* from a custom object, you can use a different syntax that needs other prefixes. With a "*p*" for "*path*", you can begin a rule with `pc:`, `pe:`, or `pr:`, followed by the key name, another ":" and then the value or regular expression for matching.   
+
+Example: If a click text should contain the word *cart* in order to trigger a conversion and the example JS variable above is avaiable as "Custom input", the rule would be: `pc:clickText:cart`. For a referrer containing "google.com" or "google.de": `pc:pageReferrer:google.com|google.de` as a simple list comparison or `pr:pageReferrer:.*google\.[com|de].*` using a regular expression.  
 
 #### Adding conversion data
 You can define a name, value, label and any other attribute of the current conversion using the table fields. Either enter constant values or use variables to calculate dynamic values or get them from the dataLayer. 
