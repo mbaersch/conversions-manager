@@ -2,7 +2,7 @@
 
 **Create (conversion) event pushes to dataLayer depending on URLs (Custom Tag Template for Google Tag Manager)**
 
-[![Template Status](https://img.shields.io/badge/Community%20Template%20Gallery%20Status-published-green)](https://tagmanager.google.com/gallery/#/owners/mbaersch/templates/conversions-manager) ![Repo Size](https://img.shields.io/github/repo-size/mbaersch/conversions-manager) ![License](https://img.shelds.io/github/license/mbaersch/conversions-manager/)
+[![Template Status](https://img.shields.io/badge/Community%20Template%20Gallery%20Status-published-green)](https://tagmanager.google.com/gallery/#/owners/mbaersch/templates/conversions-manager) ![Repo Size](https://img.shields.io/github/repo-size/mbaersch/conversions-manager) ![License](https://img.shelds.io/github/license/mbaersch/conversions-manager)
 
 
 ## Why this template? 
