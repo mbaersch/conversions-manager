@@ -2,7 +2,7 @@
 
 **Create (conversion) event pushes to dataLayer depending on URLs (Custom Tag Template for Google Tag Manager)**
 
-[![Template Status](https://img.shields.io/badge/Community%20Template%20Gallery%20Status-published-green)](https://tagmanager.google.com/gallery/#/owners/mbaersch/templates/conversions-manager) ![Repo Size](https://img.shields.io/github/repo-size/mbaersch/conversions-manager) ![License](https://img.shelds.io/github/license/mbaersch/conversions-manager)
+[![Template Status](https://img.shields.io/badge/Community%20Template%20Gallery%20Status-published-green)](https://tagmanager.google.com/gallery/#/owners/mbaersch/templates/conversions-manager) ![Repo Size](https://img.shields.io/github/repo-size/mbaersch/conversions-manager) ![License](https://img.shelds.io/github/license/mbaersch/conversions-manager/)
 
 
 ## Why this template? 
@@ -133,3 +133,26 @@ You can then use the event as a **firing trigger** for all conversion tags - one
 Create **blocking triggers** for missing data like `ads_label is "NONE"` to fire a service only if everything was privided in the rule that created the dataLayer event.  
 
 This way, you can usually use just one trigger to fire all conversions, and one blocking trigger and a tag for every service.  
+
+## Conversions Manager Toolbox
+Working with parameter tables in the Google Tag Manager tag UI is not always fun. All additional services have to be added in some format to the "Custom" field, too. JSON is a good for readability and easy access from the dataLayer, but editing longer field lists inside GTM without any help, formatting or validation is hard and risky.   
+
+Also, if you have a bunch of rules and need to add changes or even new services that should have a value in a complex "Custom" JSON structure, the UI limitations will require a lot of clicks and manual work.
+
+For quicker (and more reliable) results, you can use a Google Spreadsheet that can help you...
+
+- to define and maintain conversion rules
+- edit all standard "Conversion data" parameters 
+- add new fields to your "Custom" structure or edit / delete existing data
+- create variables to access all parameters (standard and custom) with a click
+- add triggers to the container to fire tags depending on variable values    
+
+### Use the template
+You can [access the template here](https://docs.google.com/spreadsheets/d/1k1L3CIudh2c8fyX3jnYrGqCrCqCvFmrx7E_bGzPBtts), make a copy in your own drive and use the "Conversions Manager Toolbox" menu in the spreadsheet to read and write rules and add variables and triggers.
+
+Quick instructions can be found in the "Configuration" sheet, where you need to add the path to your existing Conversions Manager tag in the format: https://tagmanager.google.com/container/accounts/xxx/containers/yyy/workspaces/zzz/tags/123 or (short) accounts/xxx/containers/yyy/workspaces/zzz/tags/123. 
+
+A "Browse" button will help you to pick the tag from a list instead, listing all accounts first. After selecting an account, a list of containers will be loaded and then new lists with workspaces and tags after you select an item from the previous list. If a workspace "Default Workspace" is present in the list of workspaces, it will be selected automatically (just like a tag called "Conversions Manager" in the tags list). 
+
+### Definig patterns
+Using the prefix syntax to define a rule might seem confusing. For that reason, the template includes a tab called "Pattern Helper" where you can select a source and match type from a list, enter a value and get a pattern as a result. You can use this to populate the "Pattern / Trigger rule" column in the "Rules" sheet by selecting "*Edit - Paste special - Values only*" from the menu or using the hotkey CTRL+SHIFT+V.   
