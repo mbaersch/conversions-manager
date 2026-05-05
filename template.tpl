@@ -10,9 +10,8 @@ ___INFO___
 
 {
   "type": "TAG",
-  "id": "cvt_temp_public_id",
+  "id": "cvt_55VW2",
   "version": 1,
-  "securityGroups": [],
   "displayName": "Conversions Manager",
   "categories": [
     "CONVERSIONS",
@@ -26,7 +25,8 @@ ___INFO___
   "description": "Push conversion / event data to dataLayer for triggering different tags with centralized conversion rule set. Enables using one tag per service for multiple conversions or events.",
   "containerContexts": [
     "WEB"
-  ]
+  ],
+  "securityGroups": []
 }
 
 
@@ -162,6 +162,13 @@ ___TEMPLATE_PARAMETERS___
             "type": "NON_EMPTY"
           }
         ]
+      },
+      {
+        "type": "CHECKBOX",
+        "name": "firstMatchWins",
+        "checkboxText": "Stop after first match",
+        "simpleValueType": true,
+        "help": "Check this option if Conversions Manager should stop evaluating rules after a first match was found. Creates only one managed conversion event, even if multiple rules would match."
       }
     ]
   }
@@ -231,6 +238,9 @@ if (data.conversionData) {
   });
   
   if (currentConversions && currentConversions.length > 0) {
+    
+    if (data.firstMatchWins == true) currentConversions.length = 1;
+
     currentConversions.forEach(function(x){
       let customData = x.custom ? JSON.parse(x.custom)||x.custom : undefined;
       let dlEvent = {

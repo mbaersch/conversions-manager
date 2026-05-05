@@ -108,6 +108,9 @@ If you want to access a *single value* from a custom object, you can use a diffe
 
 Example: If a click text should contain the word *cart* in order to trigger a conversion and the example JS variable above is avaiable as "Custom input", the rule would be: `pc:clickText:cart`. For a referrer containing "google.com" or "google.de": `pc:pageReferrer:google.com|google.de` as a simple list comparison or `pr:pageReferrer:.*google\.[com|de].*` using a regular expression.  
 
+### Stop after first match
+This advanced option can be used if you want to combine specific rules with additional fallback rules that would match if a more specific rule is missing. By default, all matching rules lead to a dataLayer event. If this option is checked, only the first match will create an event and all other rules / matches will be ignored. You can also use this, if you combine URLs, event names and custom rules that would create several events if the same Conversions Manager is triggered by page views, clicks and dataLayer events. The right order will prefer clicks over events or page views.      
+
 #### Adding conversion data
 You can define a name, value, label and any other attribute of the current conversion using the table fields. Either enter constant values or use variables to calculate dynamic values or get them from the dataLayer. 
 
