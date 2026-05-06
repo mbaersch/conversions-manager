@@ -168,7 +168,8 @@ ___TEMPLATE_PARAMETERS___
         "name": "firstMatchWins",
         "checkboxText": "Stop after first match",
         "simpleValueType": true,
-        "help": "Check this option if Conversions Manager should stop evaluating rules after a first match was found. Creates only one managed conversion event, even if multiple rules would match."
+        "help": "Check this option if Conversions Manager should stop evaluating rules after a first match was found. Creates only one managed conversion event, even if multiple rules would match.",
+        "defaultValue": false
       }
     ]
   }
