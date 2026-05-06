@@ -3,7 +3,7 @@ documentation: "https://github.com/mbaersch/conversions-manager/#readme"
 versions:
   # Latest version
   - sha: 2aca6e66b4bc870ddf8510e41e8b14a6c0b75954
-    changeNotes: [fix default] added new option "Stop after first match" for more control when multiple rules match.
+    changeNotes: (fix default) added new option "Stop after first match" for more control when multiple rules match.
   # Older versions  
   - sha: 7bda0eb5c05e92f2e65521cdeb60f9127331ecf7
     changeNotes: added new option "Stop after first match" for more control when multiple rules match.
