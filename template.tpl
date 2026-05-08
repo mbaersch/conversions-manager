@@ -10,7 +10,7 @@ ___INFO___
 
 {
   "type": "TAG",
-  "id": "cvt_55VW2",
+  "id": "cvt_temp_public_id",
   "version": 1,
   "displayName": "Conversions Manager",
   "categories": [
@@ -25,8 +25,8 @@ ___INFO___
   "description": "Push conversion / event data to dataLayer for triggering different tags with centralized conversion rule set. Enables using one tag per service for multiple conversions or events.",
   "containerContexts": [
     "WEB"
-  ],
-  "securityGroups": []
+  ]
+
 }
 
 
