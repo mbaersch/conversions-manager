@@ -10,7 +10,7 @@ ___INFO___
 
 {
   "type": "TAG",
-  "id": "cvt_temp_public_id",
+  "id": "cvt_55VW2",
   "version": 1,
   "displayName": "Conversions Manager",
   "categories": [
@@ -25,8 +25,8 @@ ___INFO___
   "description": "Push conversion / event data to dataLayer for triggering different tags with centralized conversion rule set. Enables using one tag per service for multiple conversions or events.",
   "containerContexts": [
     "WEB"
-  ]
-  
+  ],
+  "securityGroups": []
 }
 
 
@@ -131,6 +131,14 @@ ___TEMPLATE_PARAMETERS___
     ]
   },
   {
+    "type": "CHECKBOX",
+    "name": "firstMatchWins",
+    "checkboxText": "Stop after first matching rule",
+    "simpleValueType": true,
+    "help": "Check this option if Conversions Manager should stop evaluating rules after a first match was found. Creates only one managed conversion event, even if multiple rules would match.",
+    "defaultValue": false
+  },
+  {
     "type": "GROUP",
     "name": "grpAdvanced",
     "displayName": "Advanced Options",
@@ -164,14 +172,6 @@ ___TEMPLATE_PARAMETERS___
         ]
       }
     ]
-  },
-  {
-    "type": "CHECKBOX",
-    "name": "firstMatchWins",
-    "checkboxText": "Stop after first matching rule",
-    "simpleValueType": true,
-    "help": "Check this option if Conversions Manager should stop evaluating rules after a first match was found. Creates only one managed conversion event, even if multiple rules would match.",
-    "defaultValue": false
   }
 ]
 
@@ -397,3 +397,4 @@ scenarios: []
 ___NOTES___
 
 Created on 6.9.2024, 00:11:43
+
