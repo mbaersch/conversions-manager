@@ -2,7 +2,7 @@ homepage: "https://www.markus-baersch.de"
 documentation: "https://github.com/mbaersch/conversions-manager/#readme"
 versions:
   # Latest version
-  - sha: e57921ead042af94285662d3e6b43d7ac2568a50
+  - sha: 6bc1058b7e6a89dcf7178d6ca3455093ac6633ce
     changeNotes: (fix default) added new option "Stop after first match" for more control when multiple rules match.
   # Older versions  
   - sha: 7bda0eb5c05e92f2e65521cdeb60f9127331ecf7
