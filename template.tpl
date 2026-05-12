@@ -12,7 +12,6 @@ ___INFO___
   "type": "TAG",
   "id": "cvt_temp_public_id",
   "version": 1,
-  "securityGroups": [],
   "displayName": "Conversions Manager",
   "categories": [
     "CONVERSIONS",
@@ -27,6 +26,7 @@ ___INFO___
   "containerContexts": [
     "WEB"
   ]
+  
 }
 
 
@@ -131,6 +131,14 @@ ___TEMPLATE_PARAMETERS___
     ]
   },
   {
+    "type": "CHECKBOX",
+    "name": "firstMatchWins",
+    "checkboxText": "Stop after first matching rule",
+    "simpleValueType": true,
+    "help": "Check this option if Conversions Manager should stop evaluating rules after a first match was found. Creates only one managed conversion event, even if multiple rules would match.",
+    "defaultValue": false
+  },
+  {
     "type": "GROUP",
     "name": "grpAdvanced",
     "displayName": "Advanced Options",
@@ -231,6 +239,9 @@ if (data.conversionData) {
   });
   
   if (currentConversions && currentConversions.length > 0) {
+    
+    if (data.firstMatchWins == true) currentConversions.length = 1;
+
     currentConversions.forEach(function(x){
       let customData = x.custom ? JSON.parse(x.custom)||x.custom : undefined;
       let dlEvent = {
@@ -386,4 +397,3 @@ scenarios: []
 ___NOTES___
 
 Created on 6.9.2024, 00:11:43
-
