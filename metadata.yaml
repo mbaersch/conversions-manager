@@ -1,10 +1,12 @@
 homepage: "https://www.markus-baersch.de"
 documentation: "https://github.com/mbaersch/conversions-manager/#readme"
-versions:
+versions:  
   # Latest version
+  - sha: 14d15b0d431fa41409fd45bdd9e50c98bfc78185
+    changeNotes: republished old version due to update error in GTM ui.
+  # Older versions  
   - sha: 6bc1058b7e6a89dcf7178d6ca3455093ac6633ce
     changeNotes: (fix default) added new option "Stop after first match" for more control when multiple rules match.
-  # Older versions  
   - sha: 7bda0eb5c05e92f2e65521cdeb60f9127331ecf7
     changeNotes: added new option "Stop after first match" for more control when multiple rules match.
   - sha: 8f3254fae71aada5675db65e0b578d7cfa0fd219
